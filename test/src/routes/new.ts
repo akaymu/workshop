@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 
-import { Test } from '../models/test';
+import { Test } from '../models/testModel';
 
 
 const router = express.Router();
@@ -26,7 +26,7 @@ router.post(
 
     const { testName, testNo, isCorrect } = req.body;
 
-    const existingTest = Test.findOne({ testNo: testNo });
+    const existingTest = await Test.findOne({ testNo: testNo });
 
     if (existingTest !== null) {
       return res.status(400).json({ erros: ['Test no zaten kullanılıyor. Lütfen başka bir test no seçiniz.'] });
